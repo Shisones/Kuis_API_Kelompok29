@@ -220,18 +220,6 @@ class HomePageState extends State<HomePage> {
     });
   }
 
-  void createCart(String itemId) {
-    Map<String, dynamic> newCart = {
-      'user_id': widget.userID, // UserID
-      'item_id': itemId, // ItemID
-      'quantity': 1, // Quantity
-    };
-
-    // Tambahkan keranjang baru ke wholeCarts
-    setState(() {
-      wholeCarts.add(newCart);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -293,17 +281,15 @@ class HomePageState extends State<HomePage> {
                             itemBuilder: (context, index) {
                               final singleItem = item.itemList[index];
                               return ListTile(
-                                // leading: Image.network('http://146.190.109.66:8000/items_image/1'),
-                                title: Text(singleItem.title),
-                                subtitle: Text("Deskripsi: ${singleItem.description}"),
-                                trailing: IconButton(
-                                  icon: Icon(Icons.add, color: Colors.green),
-                                  onPressed: () {
-                                    // Tambahkan keranjang baru saat tombol "+" ditekan
-                                    createCart(singleItem.id);
-                                  },
-                                ),
-                              );
+                                  title: Text(singleItem.title),
+                                  subtitle: Text("Deskripsi: ${singleItem.description}"),
+                                  // onTap: () {
+                                  //   Navigator.of(context).push(
+                                  //       MaterialPageRoute(builder: (conteUserApixt) => DetailProdukPage(
+            
+                                  // id: singleItem.id)));
+                                  // }
+                                  );
                             },
                           ),
                         ],
