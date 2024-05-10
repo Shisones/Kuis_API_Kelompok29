@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   final _searchQueryController = TextEditingController();
   String namaUser = '';
-  List<dynamic> listItem = [ ];
+  List<dynamic> listItem = [];
 
   @override
   void initState() {
@@ -39,7 +39,6 @@ class HomePageState extends State<HomePage> {
     setState(() {
       namaUser = usernameResponse['username'];
     });
-
   }
 
   Future<void> _fetchItems() async {
@@ -51,7 +50,6 @@ class HomePageState extends State<HomePage> {
       listItem = itemResponse;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -100,36 +98,37 @@ class HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Consumer<ItemList>(
+                    builder: (context, item, child) {
+                      return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-            Consumer<ItemList>(
-              builder: (context, item, child) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
                           ListView.builder(
                             shrinkWrap: true,
                             itemCount: item.itemList.length,
                             itemBuilder: (context, index) {
                               final singleItem = item.itemList[index];
                               return ListTile(
-                                  title: Text(singleItem.title),
-                                  subtitle: Text("Deskripsi: ${singleItem.description}"),
-                                  // onTap: () {
-                                  //   Navigator.of(context).push(
-                                  //       MaterialPageRoute(builder: (conteUserApixt) => DetailProdukPage(
-            
-                                  // id: singleItem.id)));
-                                  // }
-                                  );
+                                title: Text(singleItem.title),
+                                subtitle: Text(
+                                    "Deskripsi: ${singleItem.description}"),
+                                // onTap: () {
+                                //   Navigator.of(context).push(
+                                //       MaterialPageRoute(builder: (conteUserApixt) => DetailProdukPage(
+
+                                // id: singleItem.id)));
+                                // }
+                              );
                             },
                           ),
-                  ],
-                );
-              },
-            ),
                         ],
-                      ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
