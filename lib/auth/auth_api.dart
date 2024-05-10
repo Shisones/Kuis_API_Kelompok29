@@ -36,9 +36,9 @@ class AuthAPI with ChangeNotifier {
 
   if (response.statusCode == 200) {
     final jsonResponse = json.decode(response.body);
-    final userId = jsonResponse['user_id'];
-    final accessToken = jsonResponse['access_token'];
-    return {'userId': userId, 'access_token': accessToken};
+    final user_id = jsonResponse['user_id'];
+    final access_token = jsonResponse['access_token'];
+    return {'user_id': user_id, 'access_token': access_token};
   } else {
     throw Exception('Login failed with status code ${response.statusCode}');
   }

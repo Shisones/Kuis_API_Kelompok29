@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:kuis_api_kel29/page/home_page.dart';
 import 'package:kuis_api_kel29/auth/auth_api.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  LoginPage({Key? key}) : super(key: key);
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+
+class _LoginPageState extends State<LoginPage> {  
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  LoginPage({super.key});
+  // LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +58,27 @@ class LoginPage extends StatelessWidget {
                     final userID = result['user_id'];
                     final accessToken = result['access_token'];
 
-                    print(result);
+                    // print("userid ${result['user_id']}");
+                    // print("token $accessToken");
+                    // print(result);
+
+                    // Navigasi ke halaman beranda setelah login berhasil
+                    Navigator.of(context).push
+                    (
+                      MaterialPageRoute
+                      (
+                        builder: (context) => HomePage
+                        (
+                          userID: userID,
+                          accessToken: accessToken,
+                        ),
+                      ),
+                    );
 
                     // Use the userId and accessToken values here
                   } catch (e) {
-                    (e is Exception) ? print(e) : print('An error occurred');
+                    // (e is Exception) ? print(e) : print('An error occurred');
+                    print('Error during login: $e');
                   }
                 },
                 child: const Text('Login'),
