@@ -16,11 +16,11 @@ class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  // LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Kto to LoginPage pidar rahhhhh',
       home: Scaffold(
         appBar: AppBar(
@@ -58,9 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                     final userID = result['user_id'];
                     final accessToken = result['access_token'];
 
-                    // print("userid ${result['user_id']}");
-                    // print("token $accessToken");
-                    // print(result);
+                    print(result);
 
                     // Navigasi ke halaman beranda setelah login berhasil
                     Navigator.of(context).push
