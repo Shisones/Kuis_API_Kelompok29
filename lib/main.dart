@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:kuis_api_kel29/page/loginpage.dart';
+import 'package:kuis_api_kel29/page/login_page.dart';
 import 'package:kuis_api_kel29/page/home_page.dart';
-import 'package:kuis_api_kel29/auth/auth_api.dart';
+import 'package:kuis_api_kel29/provider/auth_api.dart';
+import 'package:kuis_api_kel29/provider/item_api.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
 
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +21,13 @@ class MyApp extends StatelessWidget {
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => AuthAPI()),
+          ChangeNotifierProvider(create: (_) => ItemList()),
           // Add other providers if needed
         ],
-        child: MaterialApp(
+        child: const MaterialApp(
           title: 'Kto to LoginPage pidar rahhhhh',
           // home: LoginPage(),
-          home: const HomePage(userID: 26, accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5hZ3JvIiwiZXhwIjoxNzE1NDIxMjcyfQ.1IjEKJsM8AgiJKv1NI1CH9UpSGwYu9ye5hbocfoP2CA",),
+          home: HomePage(userID: 26, accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5hZ3JvIiwiZXhwIjoxNzE1NDIxMjcyfQ.1IjEKJsM8AgiJKv1NI1CH9UpSGwYu9ye5hbocfoP2CA",),
         ),
       ),
     );

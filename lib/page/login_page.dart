@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:kuis_api_kel29/page/home_page.dart';
-import 'package:kuis_api_kel29/auth/auth_api.dart';
+import 'package:kuis_api_kel29/provider/auth_api.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -11,11 +11,9 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-
-class _LoginPageState extends State<LoginPage> {  
+class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +59,9 @@ class _LoginPageState extends State<LoginPage> {
                     print(result);
 
                     // Navigasi ke halaman beranda setelah login berhasil
-                    Navigator.of(context).push
-                    (
-                      MaterialPageRoute
-                      (
-                        builder: (context) => HomePage
-                        (
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(
                           userID: userID,
                           accessToken: accessToken,
                         ),
