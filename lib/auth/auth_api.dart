@@ -24,24 +24,23 @@ class AuthAPI with ChangeNotifier {
     }
   }
 
-  Future<void> login(String username, String password) async {
-    final requestBody =
-        jsonEncode({'username': username, 'password': password});
+  Future<Map<String, dynamic>> login(String username, String password) async {
+  final response = await http.post(
+    Uri.parse('http://146.190.109.66:8000/login'),
+    headers: {'Content-Type': 'application/json'},
+    body: json.encode({
+      'username': username,
+      'password': password,
+    }),
+  );
 
-    debugPrint('Request body: $requestBody');
-
-    final response = await http.post(
-      Uri.parse('http://146.190.109.66:8000/login'),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: requestBody,
-    );
-
-    if (response.statusCode == 200) {
-      notifyListeners();
-    } else {
-      throw Exception(response.statusCode);
-    }
+  if (response.statusCode == 200) {
+    final jsonResponse = json.decode(response.body);
+    final userId = jsonResponse['user_id'];
+    final accessToken = jsonResponse['access_token'];
+    return {'userId': userId, 'access_token': accessToken};
+  } else {
+    throw Exception('Login failed with status code ${response.statusCode}');
   }
+}
 }

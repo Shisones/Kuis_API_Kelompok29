@@ -40,11 +40,18 @@ class LoginPage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   try {
-                    await Provider.of<AuthAPI>(context, listen: false)
-                        .login(
+                    final result =
+                        await Provider.of<AuthAPI>(context, listen: false)
+                            .login(
                       _usernameController.text,
                       _passwordController.text,
                     );
+                    final userID = result['user_id'];
+                    final accessToken = result['access_token'];
+
+                    print(result);
+
+                    // Use the userId and accessToken values here
                   } catch (e) {
                     (e is Exception) ? print(e) : print('An error occurred');
                   }
