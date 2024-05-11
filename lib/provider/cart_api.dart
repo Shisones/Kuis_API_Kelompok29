@@ -95,15 +95,14 @@ class CartList with ChangeNotifier {
     }
   }
 
-  Future<List> purgeCart(String user_id, String token) async {
-  // Future<List> purgeCart(int user_id, String token) async {
+  Future<void> purgeCart(String user_id, String token) async {
     final response =
         await http.delete(Uri.parse('$url/clear_whole_carts_by_userid/$user_id'), headers: {
       'Content-Type': 'application/json',
       'Authorization': token,
     });
     if (response.statusCode == 200) {
-      return setFromJson(jsonDecode(response.body));
+      return jsonDecode(response.body);
     } else {
       throw Exception(response.reasonPhrase);
     }

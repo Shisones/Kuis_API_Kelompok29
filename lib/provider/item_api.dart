@@ -55,4 +55,19 @@ class ItemList with ChangeNotifier {
       throw Exception(response.reasonPhrase);
     }
   }
+  
+  Future<List<dynamic>> searchItems(String token, String keyword) async {
+    final response = await http.get(
+      Uri.parse('$url/search_items/$keyword'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+    );
+    if (response.statusCode == 200) {
+      return setFromJson(jsonDecode(response.body));
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
 }

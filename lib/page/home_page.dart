@@ -62,6 +62,19 @@ class HomePageState extends State<HomePage> {
       listCart = cartResponse;
     });
   }
+  
+  Future<void> _searchItems(String keyword) async {
+    try {
+      final accessToken = widget.accessToken;
+      final searchedItems = await Provider.of<ItemList>(context, listen: false)
+          .searchItems('Bearer $accessToken', keyword);
+      setState(() {
+        listItem = searchedItems;
+      });
+    } catch (error) {
+      _fetchItems();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +92,8 @@ class HomePageState extends State<HomePage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: TextField(
+              child: TextField
+              (
                 controller: _searchQueryController,
                 cursorColor: Colors.white,
                 style: const TextStyle(
@@ -87,7 +101,7 @@ class HomePageState extends State<HomePage> {
                 ),
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.search, color: Colors.white),
-                  hintText: "Cari di yudart food",
+                  hintText: "Cari di Jas food",
                   hintStyle: TextStyle(
                     color: Colors.white,
                   ),
@@ -103,6 +117,10 @@ class HomePageState extends State<HomePage> {
                   fillColor: Color.fromARGB(255, 36, 36, 36),
                   contentPadding: EdgeInsets.symmetric(vertical: 10.0),
                 ),
+                onSubmitted: (value) {
+                  _searchItems(value);
+                },
+              
               ),
             ),
             Padding(

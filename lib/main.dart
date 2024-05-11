@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kuis_api_kel29/provider/bayar_api.dart';
 import 'package:provider/provider.dart';
 
 import 'package:kuis_api_kel29/page/login_page.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => AuthAPI()),
           ChangeNotifierProvider(create: (_) => ItemList()),
           ChangeNotifierProvider(create: (_) => CartList()),
+          ChangeNotifierProvider(create: (_) => Pembayaran()),
           // Add other providers if needed
         ],
         child: const MaterialApp(
