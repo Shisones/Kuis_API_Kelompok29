@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:kuis_api_kel29/provider/auth_api.dart';
 import 'package:kuis_api_kel29/provider/item_api.dart';
+import 'package:kuis_api_kel29/provider/cart_api.dart';
 import 'package:kuis_api_kel29/page/cart_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,13 +23,14 @@ class HomePageState extends State<HomePage> {
   final _searchQueryController = TextEditingController();
   String namaUser = '';
   List<dynamic> listItem = [];
-  List<Map<String, dynamic>> wholeCarts = [];
+  List<dynamic> listCart = [];
 
   @override
   void initState() {
     super.initState();
     _fetchUsername();
     _fetchItems();
+    _fetchCart();
   }
 
   Future<void> _fetchUsername() async {
@@ -50,25 +52,20 @@ class HomePageState extends State<HomePage> {
       listItem = itemResponse;
     });
   }
-
-  void createCart(String itemId) {
-    Map<String, dynamic> newCart = {
-      'user_id': widget.userID, // UserID
-      'item_id': itemId, // ItemID
-      'quantity': 1, // Quantity
-    };
-
-    // Tambahkan keranjang baru ke wholeCarts
+  
+  Future<void> _fetchCart() async {
+    final userId = widget.userID;
+    final accessToken = widget.accessToken;
+    final cartResponse = await Provider.of<CartList>(context, listen: false)
+        .fetchCart(userId.toString(), 'Bearer $accessToken');
     setState(() {
-      wholeCarts.add(newCart);
+      listCart = cartResponse;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 36, 36, 36),
           elevation: 0,
@@ -153,10 +150,42 @@ class HomePageState extends State<HomePage> {
                                 trailing: IconButton(
                                   icon: const Icon(Icons.add,
                                       color: Colors.green),
-                                  onPressed: () {
-                                    // Tambahkan keranjang baru saat tombol "+" ditekan
-                                    createCart(singleItem.id);
+                                  onPressed: () async {
+                                    try {
+                                      int itemId = int.parse(singleItem.id);
+                                      // Tampilkan indikator aktivitas selama proses berlangsung
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text('Adding item to cart...'),
+                                          duration: Duration(seconds: 1),
+                                        ),
+                                      );
+                                      // Tambahkan item ke keranjang secara asinkron
+                                      await Provider.of<CartList>(context, listen: false)
+                                          .addToCart(widget.userID, itemId, 1, 'Bearer ${widget.accessToken}');
+                                      // Fetch updated cart data
+                                      _fetchCart();
+                                      // Tampilkan notifikasi item berhasil ditambahkan
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text('Item added to cart successfully!'),
+                                          duration: Duration(seconds: 1),
+                                        ),
+                                      );
+                                    } catch (error) {
+                                      // Tangani error jika ada
+                                      print('Error adding item to cart: $error');
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text('Failed to add item to cart: $error'),
+                                          duration: Duration(seconds: 1),
+                                        ),
+                                      );
+                                    }
                                   },
+
+
+
                                 ),
                               );
                             },
@@ -176,16 +205,20 @@ class HomePageState extends State<HomePage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) =>
-                    CartPage(userId: widget.userID, wholeCarts: wholeCarts),
+                    CartPage
+                    (
+                      userID: widget.userID, 
+                      accessToken: widget.accessToken, 
+                      // listCart: listCart
+                    ),
               ),
             );
           },
           child: Badge(
-              label: Text('${wholeCarts.length}'),
+              label: Text('${listCart.length}'),
               child: const Icon(Icons.shopping_cart)),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      ),
     );
   }
 }

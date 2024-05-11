@@ -7,7 +7,7 @@ import 'dart:convert';
 import 'package:kuis_api_kel29/provider/model/item_model.dart';
 
 class ItemList with ChangeNotifier {
-  final String url = 'http://146.190.109.66:8000';
+  final String url = 'http://146.190.109.66:8000'; 
   List<dynamic> _itemList = [];
   List<dynamic> get itemList => _itemList;
 
