@@ -26,10 +26,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => Pembayaran()),
           // Add other providers if needed
         ],
-        child: const MaterialApp(
-          title: 'Kto to LoginPage pidar rahhhhh',
-          // home: LoginPage(),
-          home: HomePage(userID: 26, accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5hZ3JvIiwiZXhwIjoxNzE1NDIxMjcyfQ.1IjEKJsM8AgiJKv1NI1CH9UpSGwYu9ye5hbocfoP2CA",),
+        child: MaterialApp(
+          title: 'Jas Food',
+          home: LoginPage(),
         ),
     );
   }

@@ -22,11 +22,22 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   List<dynamic> listCart = [];
+  List<dynamic> listItem = [];
 
   @override
   void initState() {
     super.initState();
     _fetchCart();
+  }
+
+  Future<void> _fetchItems() async {
+    final userId = widget.userID;
+    final accessToken = widget.accessToken;
+    final itemResponse = await Provider.of<ItemList>(context, listen: false)
+        .fetchData('Bearer $accessToken');
+    setState(() {
+      listItem = itemResponse;
+    });
   }
 
   Future<void> _fetchCart() async {

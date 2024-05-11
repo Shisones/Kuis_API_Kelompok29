@@ -88,7 +88,7 @@ class CartList with ChangeNotifier {
       'Authorization': token,
     });
     if (response.statusCode == 200) {
-      print("berhasil $cart_id");
+      print("K $cart_id");
       return jsonDecode(response.body);
     } else {
       throw Exception(response.reasonPhrase);

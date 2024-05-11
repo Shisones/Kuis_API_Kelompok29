@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Kto to LoginPage pidar rahhhhh',
+      title: 'Jas Food',
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Login Page'),

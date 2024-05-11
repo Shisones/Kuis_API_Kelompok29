@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 import 'package:kuis_api_kel29/provider/auth_api.dart';
 import 'package:kuis_api_kel29/provider/item_api.dart';
 import 'package:kuis_api_kel29/provider/cart_api.dart';
@@ -86,6 +87,7 @@ class HomePageState extends State<HomePage> {
             "Selamat datang $namaUser",
             style: const TextStyle(color: Colors.white),
           ),
+          leading: Icon(Icons.person, color: Colors.white,),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -138,6 +140,7 @@ class HomePageState extends State<HomePage> {
                             itemCount: item.itemList.length,
                             itemBuilder: (context, index) {
                               final singleItem = item.itemList[index];
+                              final hargaFormatted = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp').format(singleItem.price);
                               return ListTile(
                                 leading: FutureBuilder<dynamic>(
                                   future: item.fetchImage(
@@ -162,9 +165,9 @@ class HomePageState extends State<HomePage> {
                                     }
                                   },
                                 ),
-                                title: Text(singleItem.title),
+                                title: Text("${singleItem.title}  $hargaFormatted"),
                                 subtitle: Text(
-                                    "Deskripsi: ${singleItem.description}"),
+                                    singleItem.description),
                                 trailing: IconButton(
                                   icon: const Icon(Icons.add,
                                       color: Colors.green),
@@ -201,9 +204,6 @@ class HomePageState extends State<HomePage> {
                                       );
                                     }
                                   },
-
-
-
                                 ),
                               );
                             },

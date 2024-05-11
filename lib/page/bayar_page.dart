@@ -37,7 +37,6 @@ class _BayarPageState extends State<BayarPage> {
     try {
       final pembayaranProvider = Provider.of<Pembayaran>(context, listen: false);
       final statusResponse = await pembayaranProvider.getStatus(widget.userID.toString(), 'Bearer ${widget.accessToken}');
-      // print(statusResponse);
       setState(() {
         status = statusResponse;
       });
@@ -113,27 +112,33 @@ class _BayarPageState extends State<BayarPage> {
                         CircularProgressIndicator(), // Tampilkan CircularProgressIndicator jika proses sedang berlangsung
                         SizedBox(height: 20),
                         Text(
-                          'Status: $status', // Tampilkan status pembayaran
+                          status, // Tampilkan status pembayaran
                           style: TextStyle(fontSize: 16),
                         ),
                       ],
                     )
                   : _isOrderReceived
-                      ? ElevatedButton(
-                          onPressed: () {
-                            // Tombol untuk kembali ke halaman Home
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomePage(
-                                  userID: widget.userID,
-                                  accessToken: widget.accessToken,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Text('Kembali ke Home'),
-                        )
+                      ? Column(
+                        children: [
+                          Text("Pesananmu sudah selesai"),
+                          SizedBox(height: 10,),
+                          ElevatedButton(
+                              onPressed: () {
+                                // Tombol untuk kembali ke halaman Home
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomePage(
+                                      userID: widget.userID,
+                                      accessToken: widget.accessToken,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text('Kembali ke Home'),
+                            ),
+                        ],
+                      )
                       : ElevatedButton(
                           onPressed: _processOrder,
                           child: Text('Bayar'),

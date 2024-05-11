@@ -13,7 +13,6 @@ class Pembayaran with ChangeNotifier
       'Authorization': token,
     });
     if (response.statusCode == 200) {
-      print("berhasil $user_id");
       return jsonDecode(response.body);
     } else {
       throw Exception(response.reasonPhrase);
@@ -27,7 +26,6 @@ class Pembayaran with ChangeNotifier
       'Authorization': token,
     });
     if (response.statusCode == 200) {
-      print("berhasil bayar $user_id");
       return jsonDecode(response.body);
     } else {
       throw Exception(response.reasonPhrase);
@@ -41,7 +39,6 @@ class Pembayaran with ChangeNotifier
       'Authorization': token,
     });
     if (response.statusCode == 200) {
-      print("berhasil penjual terima $user_id");
       return jsonDecode(response.body);
     } else {
       throw Exception(response.reasonPhrase);
@@ -55,7 +52,6 @@ class Pembayaran with ChangeNotifier
       'Authorization': token,
     });
     if (response.statusCode == 200) {
-      print("berhasil diantar $user_id");
       return jsonDecode(response.body);
     } else {
       throw Exception(response.reasonPhrase);
@@ -69,7 +65,6 @@ class Pembayaran with ChangeNotifier
       'Authorization': token,
     });
     if (response.statusCode == 200) {
-      print("berhasil diterima $user_id");
       return jsonDecode(response.body);
     } else {
       throw Exception(response.reasonPhrase);
@@ -85,7 +80,6 @@ class Pembayaran with ChangeNotifier
       'Authorization': token,
     });
     if (response.statusCode == 200) {
-      print("berhasil status $user_id");
       print(jsonDecode(response.body));
       return jsonDecode(response.body);
     } else {
